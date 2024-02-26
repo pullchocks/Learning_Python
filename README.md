@@ -1,6 +1,6 @@
-Very basic set of scripts as I learn more Python.
+# Very basic set of scripts as I learn more Python.
 
-# Django Setup:
+## Django Setup:
 ```
 cd path/Django
 python -m venv myvenv
