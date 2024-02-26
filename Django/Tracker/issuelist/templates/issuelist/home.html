@@ -1,38 +1,40 @@
 {% load static %}
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Issue Tracker - Issues</title>
-    <link rel="stylesheet" href="{% static 'issuelist/style.css' %}" type="text/css" media="screen"/>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Issue List</title>
+    <link rel="stylesheet" href="{% static 'issuelist/style.css' %}">
 </head>
 <body>
-<div id="hd">
-    <h1>Issue Tracker</h1>
+
+<div class="admin-login">
+    <a href="/admin/">Admin Login</a>
 </div>
-<div id="mn">
-    <ul>
-        <li><a href="{% url 'home' %}" class="sel">View Issues</a></li>
-        <li><a href="/admin/">Admin Site</a></li>
-    </ul>
-</div>
-<div id="bd">
-    <table>
+
+<h1>Issue List</h1>
+<table class="table">
+    <thead>
         <tr>
-            <th>Issue ID</th>
+            <th>Issue</th>
             <th>Description</th>
             <th>Status</th>
             <th>Owner</th>
         </tr>
+    </thead>
+    <tbody>
         {% for issue in issues %}
         <tr>
-            <td><a href="{% url 'issue-detail' issue.id %}">{{ issue.id }}</a></td>
+            <td>{{ issue.id }}</td>
             <td>{{ issue.summary }}</td>
             <td>{{ issue.get_status_display }}</td>
             <td>{{ issue.owner }}</td>
         </tr>
         {% endfor %}
-    </table>
-</div>
+    </tbody>
+</table>
+
 </body>
 </html>
