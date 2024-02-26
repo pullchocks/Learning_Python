@@ -1,3 +1,6 @@
 from django.shortcuts import render
+from issuetracker.models import Issue
 
-# Create your views here.
+def home(request):
+    issues = Issue.objects.all()  # Retrieve all issues
+    return render(request, 'issuelist/home.html', {'issues': issues})
