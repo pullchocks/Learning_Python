@@ -1,17 +1,26 @@
+{% load static %}
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Issue List</title>
+    <link rel="stylesheet" href="{% static 'issuelist/style.css' %}">
 </head>
 <body>
-    <h1>Issue List</h1>
-    <table border="1">
+
+<h1>Issue List</h1>
+<table class="table">
+    <thead>
         <tr>
             <th>Issue</th>
             <th>Description</th>
             <th>Status</th>
             <th>Owner</th>
         </tr>
+    </thead>
+    <tbody>
         {% for issue in issues %}
         <tr>
             <td>{{ issue.id }}</td>
@@ -20,6 +29,8 @@
             <td>{{ issue.owner }}</td>
         </tr>
         {% endfor %}
-    </table>
+    </tbody>
+</table>
+
 </body>
 </html>
