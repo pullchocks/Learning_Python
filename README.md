@@ -19,3 +19,5 @@ Open a web browser and navigate to http://127.0.0.1:8000/ (Currently an empty pa
 User: admin
 Pass: admin
 ```
+
+EZPZ
