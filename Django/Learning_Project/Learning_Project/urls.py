@@ -5,7 +5,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('issues/', include('issues.urls')),
+    path('issuelist/', include('issuelist.urls')),
 ]
 
 # This is for serving files uploaded by a user during development
