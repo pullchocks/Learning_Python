@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Issue List</title>
+</head>
+<body>
+    <h1>Issue List</h1>
+    <table border="1">
+        <tr>
+            <th>Issue</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Owner</th>
+        </tr>
+        {% for issue in issues %}
+        <tr>
+            <td>{{ issue.id }}</td>
+            <td>{{ issue.summary }}</td>
+            <td>{{ issue.get_status_display }}</td>
+            <td>{{ issue.owner }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
