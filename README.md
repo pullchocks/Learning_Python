@@ -1,6 +1,10 @@
-# Very basic set of scripts as I learn more Python.
+# Py_Scripts
+Basic set of scripts as I learn more about Python
 
-## Django Setup:
+# Django
+Functional website design/learning in Python.
+
+## Django Project Setup:
 ```
 cd path/Django
 python -m venv myvenv
