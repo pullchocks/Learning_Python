@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'issuetracker',
-    'issues',
+    'issuelist',
 ]
 
 MIDDLEWARE = [
