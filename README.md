@@ -8,7 +8,8 @@ Functional website design/learning in Python.
 ```
 cd path/Django
 python -m venv myvenv
-venv\Scripts\activate.bat
+Set-ExecutionPolicy Unrestricted -Scope Process
+venv\Scripts\activate
 python -m pip install -r requirements.txt
 cd Learning_Project
 python manage.py runserver
