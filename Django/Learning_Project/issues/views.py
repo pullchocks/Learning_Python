@@ -3,8 +3,9 @@ from issuetracker.models import Issue  # Importing the Issue model from issuetra
 
 class IssueListView(ListView):
     model = Issue
-    template_name = 'issues/issue_list.html'  # Path to the template for listing issues
+    template_name = 'issues/issue_list.html'
 
-class IssueDetailView(DetailView):
-    model = Issue
-    template_name = 'issues/issue_detail.html'  # Path to the template for showing issue details
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        print(queryset)  # Print the queryset to the console
+        return queryset
