@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+plt.get_current_fig_manager().set_window_title('Plot Project')
+
 myPoly = np.poly1d(np.array([3, -1, 1]).astype(float))
 
 x = np.linspace(-5, 5, 100)
