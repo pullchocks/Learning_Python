@@ -1,6 +1,6 @@
 # Remove prefix/suffix from string.
 
-links = [                                       # Define a list of website URLs
+links = [                                   # Define a list of website URLs
     "www.duckduckgo.com",                   # First URL
     "www.youtube.com",                      # Second URL
     "www.google.com",                       # Third URL
