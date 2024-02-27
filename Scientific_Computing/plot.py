@@ -1,3 +1,4 @@
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -18,4 +19,5 @@ plt.xticks(xticks)
 plt.yticks(yticks)
 plt.grid(True)
 plt.plot(x, y)
+
 plt.show()
