@@ -18,7 +18,17 @@ Pass: admin
 ```
 
 # Py_Scripts
-Basic set of scripts as I learn more about Python
+Basic set of scripts as I learn more about Python. Where it all started.
 
 # Scentific_Computing
 TBD
+
+## Scentific_Computing Project Setup: **INCOMPLETE**
+```
+cd path/Scentific_Computing
+python -m venv myvenv
+Set-ExecutionPolicy Unrestricted -Scope Process
+venv\Scripts\activate
+python -m pip install -r requirements.txt
+...
+```
