@@ -1,6 +1,3 @@
-# Py_Scripts
-Basic set of scripts as I learn more about Python
-
 # Django
 Functional website design/learning in Python.
 
@@ -20,4 +17,8 @@ User: admin
 Pass: admin
 ```
 
-EZPZ
+# Py_Scripts
+Basic set of scripts as I learn more about Python
+
+# Scentific_Computing
+TBD
