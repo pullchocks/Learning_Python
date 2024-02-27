@@ -9,7 +9,7 @@ y = myPoly(x)
 plt.xlabel('x values')
 plt.ylabel('f(x) values')
 
-xticks = np.arange(-5, 5, 10)
+xticks = np.arange(-5, 6, 1)
 yticks = np.arange(0, 100, 10)
 
 plt.xticks(xticks)
