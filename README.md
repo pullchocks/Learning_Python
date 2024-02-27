@@ -1,5 +1,5 @@
 # Django
-Functional website design/learning in Python.
+Functional website design/learning in Python. Tracker with both frontend and backend.
 
 ## Django Project Setup:
 ```
@@ -8,7 +8,7 @@ python -m venv myvenv
 Set-ExecutionPolicy Unrestricted -Scope Process
 venv\Scripts\activate
 python -m pip install -r requirements.txt
-cd Learning_Project
+cd Tracker
 python manage.py runserver
 ```
 Open a web browser and navigate to http://127.0.0.1:8000/ The admin panel can be found at http://127.0.0.1:8000/admin/
