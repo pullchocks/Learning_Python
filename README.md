@@ -1,5 +1,8 @@
-<h1>Python is required!</h1> 
+<h3>Python is required!</h3> 
 Download at https://www.python.org/downloads/
+
+<h1>The goal of this project:</h1>
+Aiming to learn and provide support to a small team learning Python.
 
 # Django
 Functional website design/learning in Python. Tracker with both frontend and backend.
