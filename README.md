@@ -1,3 +1,6 @@
+<h1>Python is required!</h1> 
+Download at https://www.python.org/downloads/
+
 # Django
 Functional website design/learning in Python. Tracker with both frontend and backend.
 
