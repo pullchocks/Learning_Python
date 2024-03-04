@@ -43,6 +43,7 @@ class Server():
         print("Tidying up")
         for client_socket in self.client_sockets:
             try:
+                client_socket.sendall("Server is shutting down.".encode())
                 client_socket.close()
             except socket.error:
                 pass
@@ -64,7 +65,6 @@ class ClientListener(threading.Thread):
                 if data:
                     self.handle_msg(data)
             except socket.error:
-                print("Unable to receive data")
                 self.quit()
         print("Ending client thread for {0}".format(self.client_address))
 
