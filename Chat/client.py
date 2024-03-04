@@ -50,3 +50,4 @@ class Server()
         self.echo("SUICIDE")
         
 client_thread.start()
+.
