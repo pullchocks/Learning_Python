@@ -28,13 +28,14 @@ class Server():
             client_thread.start()
             time.sleep(0.1)
 
-    def echo(self, message):
+    def echo(self, message, sender_socket=None):
         print("Echoing: {0}".format(message))
         for client_socket in self.client_sockets:
-            try:
-                client_socket.sendall(message.encode())
-            except socket.error:
-                print("Unable to send message")
+            if client_socket != sender_socket:  # Do not echo back to the sender
+                try:
+                    client_socket.sendall(message.encode())
+                except socket.error:
+                    print("Unable to send message")
 
     def remove_socket(self, socket):
         self.client_sockets.remove(socket)
@@ -75,14 +76,14 @@ class ClientListener(threading.Thread):
         except socket.error:
             pass
         self.server.remove_socket(self.client_socket)
-        self.server.echo("{0} has quit. \n".format(self.username))
+        self.server.echo("{0} has quit. \n".format(self.username), self.client_socket)
 
     def handle_msg(self, data):
         username_result = re.search('^USERNAME (.*)$', data)
         if username_result:
             self.username = username_result.group(1)
             print("{0} sent: {1}".format(self.username, data))
-            self.server.echo("{0} has joined. \n".format(self.username))
+            self.server.echo("{0} has joined. \n".format(self.username), self.client_socket)
         elif data == "QUIT":
             self.quit()
         elif data == "":
@@ -92,7 +93,7 @@ class ClientListener(threading.Thread):
                 print("{0} sent: {1}".format(self.username, data))
             else:
                 print("A client sent: {0}".format(data))
-            self.server.echo(data)
+            self.server.echo(data, self.client_socket)
 
 if __name__ == "__main__":
     server = Server(59091)
