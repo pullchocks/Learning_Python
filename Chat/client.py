@@ -47,7 +47,6 @@ class Server()
     def signal_handler(self, signal, frame)
         print("Tidying up")
         self.listener.close()
-        self.echo("SUICIDE")
+        self.echo("QUIT")
         
 client_thread.start()
-.
