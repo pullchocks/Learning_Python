@@ -1,77 +1,86 @@
-import threading
-import gtk
-import gobject
 import socket
-import re
+import threading
 import time
-import datetime
+import tkinter as tk
+from tkinter import scrolledtext, simpledialog, messagebox
 
-gobject.threads_init()
-
-class MainWindow(gtk.Window):
+class MainWindow:
     def __init__(self):
-        super(MainWindow, self).__init__()
-        
-        self.set_title("Chat")
-        vbox =gtk.VBox()
-        hbox = gtk.HBox()
-        self.username_labal = gtk.Label()
-        self.text_entry = gtk.Entry()
-        send_button = gtk.Button("Send")
-        self.text_buffer = gtk.TextBuffer()
-        text_view = gtk.TextView(self.text_buffer)
-        self.connect("destroy", self.graceful_shutdown)
-        send_button.connect("clicked", self.send_message)
-        self.text_entry.connect("activate", self.send_message)
-        vbox.pack_start(text_view)
-        hbox.pack_start(self.username_labal, expand=False)
-        hbox.pack_start(self.text_entry)
-        hbox.pack_end(send_button, expand=False)
-        vbox.pack_end(hbox, expand=False)
-        self.add(vbox)
-        self.show_all()
-        self.configure()
-        
-    def ask_for_info(self, question):
-        dialog = gtk.MessageDialog(parent = self, type = gtk.MESSAGE_QUESTION
-            
-flags = gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT
-buttons = gtk.BUTTONS_OK_CANCEL
-message_format = question)
-        entry = gtk.Entry()
-        entry.show()
-        dialog.vbox.pack_end(entry)
-        response = dialog.run()
-        response_text = entry.get_text()
-        dialog.destroy()
-        if response == gtk.RESPONSE_OK:
-            return response_text
-        else:
-            return None
-        
-    def configure(self):
-        server = self.ask_for_info("server_address:port")
-        regex = re.search('^(\d+\.\d+\.\d+\.\d+:\d+)$', server)
-        address = regex.group(1)
-        port = regex.group(2)
-        self.username = self.ask_for_info("Username")
-        self.username_labal.set_text(self.username)
-        self.network = Networking(self, self.username, addressm int(port))
-        self.network.listen()
-        
-    def add_text(self, new_text):
-        text_with_timestamp = "{0} {1}".format(datetime.datetime.now(), new_text)
+        self.window = tk.Tk()
+        self.server = simpledialog.askstring("Input", "Server address:port", parent=self.window)
+        if self.server is None:
+            self.window.destroy()
+            return
+        self.username = simpledialog.askstring("Input", "Username", parent=self.window)
+        if self.username is None:
+            self.window.destroy()
+            return
+        try:
+            split_server = self.server.split(':')
+            self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            self.socket.connect((split_server[0], int(split_server[1])))
+        except Exception as e:
+            messagebox.showerror("Connection Error", str(e))
+            self.window.destroy()
+            return
+        self.listening = True
+        self.send(f"USERNAME {self.username}")
+        self.setup_ui()
+        self.listen()
 
-        end_iter = self.text_buffer.get_end_iter()
-        self.text_buffer.insert(end_iter, text_with_timestamp)
-        
-    def send_message(self, widget):
-        new_text = self.text_entry.get_text()
-        self.text_entry.set_text("")
-        message = "{0}: {1}\n".format(self.username, new_text)
-        self.network.send(message)
-        
-    def graceful_shutdown(self, widget):
-        gtk.main_quit()
-        self.network.send("QUIT")
-        self.network.tidy_up()
+    def setup_ui(self):
+        self.text_area = scrolledtext.ScrolledText(self.window)
+        self.text_area.pack()
+        self.entry = tk.Entry(self.window)
+        self.entry.pack()
+        self.send_button = tk.Button(self.window, text="Send", command=self.send_message)
+        self.send_button.pack()
+        self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
+
+    def listener(self):
+        while self.listening:
+            try:
+                data = self.socket.recv(1024).decode()
+                if data:
+                    self.window.after(0, lambda: self.add_text(data))
+            except Exception as e:
+                print("Error receiving data:", e)
+                break
+            time.sleep(0.1)
+
+    def listen(self):
+        self.listen_thread = threading.Thread(target=self.listener)
+        self.listen_thread.daemon = True
+        self.listen_thread.start()
+
+    def send_message(self):
+        message = self.entry.get()
+        if message:
+            self.send(f"{self.username}: {message}\n")
+            self.entry.delete(0, tk.END)
+
+    def send(self, message):
+        try:
+            self.socket.sendall(message.encode())
+        except Exception as e:
+            messagebox.showerror("Send Error", str(e))
+
+    def add_text(self, text):
+        self.text_area.insert(tk.END, text + '\n')
+        self.text_area.see(tk.END)
+
+    def tidy_up(self):
+        self.listening = False
+        try:
+            self.socket.sendall("QUIT".encode())
+            self.socket.close()
+        except Exception as e:
+            print("Error closing socket:", e)
+
+    def on_closing(self):
+        self.tidy_up()
+        self.window.destroy()
+
+if __name__ == "__main__":
+    mw = MainWindow()
+    tk.mainloop()
