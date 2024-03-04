@@ -29,13 +29,17 @@ class MainWindow:
         self.listen()
 
     def setup_ui(self):
-        self.text_area = scrolledtext.ScrolledText(self.window)
+        self.text_area = tk.Text(self.window)
         self.text_area.pack()
         self.entry = tk.Entry(self.window)
         self.entry.pack()
+        self.entry.focus_set()
+        self.entry.bind('<Return>', lambda event: self.send_message())
         self.send_button = tk.Button(self.window, text="Send", command=self.send_message)
         self.send_button.pack()
         self.window.protocol("WM_DELETE_WINDOW", self.on_closing)
+        self.text_area.tag_configure("green", foreground="green")
+        self.text_area.tag_configure("blue", foreground="blue")
 
     def listener(self):
         while self.listening:
@@ -66,7 +70,13 @@ class MainWindow:
             messagebox.showerror("Send Error", str(e))
 
     def add_text(self, text):
-        self.text_area.insert(tk.END, text + '\n')
+        if ":" not in text:
+            return
+        color = "green" if text.startswith(f"{self.username}:") else "blue"
+        timestamp = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        username, message = text.split(":", 1)
+        self.text_area.insert(tk.END, f"({timestamp})\n{username}:\n", color)
+        self.text_area.insert(tk.END, f"{message}\n", "black")
         self.text_area.see(tk.END)
 
     def tidy_up(self):

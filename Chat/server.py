@@ -78,16 +78,20 @@ class ClientListener(threading.Thread):
         self.server.echo("{0} has quit. \n".format(self.username))
 
     def handle_msg(self, data):
-        print("{0} sent: {1}".format(self.username, data))
         username_result = re.search('^USERNAME (.*)$', data)
         if username_result:
             self.username = username_result.group(1)
+            print("{0} sent: {1}".format(self.username, data))
             self.server.echo("{0} has joined. \n".format(self.username))
         elif data == "QUIT":
             self.quit()
         elif data == "":
             self.quit()
         else:
+            if self.username:
+                print("{0} sent: {1}".format(self.username, data))
+            else:
+                print("A client sent: {0}".format(data))
             self.server.echo(data)
 
 if __name__ == "__main__":
