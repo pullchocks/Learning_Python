@@ -25,10 +25,11 @@ class MainWindow:
             self.window.destroy()
             return
         
-        self.setup_ui()
+        self.setup_ui()  # Ensure UI setup happens before starting to listen or sending messages
         self.listening = True
-        self.listen()
+        self.listen()  # Start listening before sending the USERNAME message
 
+        # After setup_ui and listen to ensure the send method is defined
         self.send(f"USERNAME {self.username}")
 
     def setup_ui(self):
@@ -70,7 +71,7 @@ class MainWindow:
         message = self.entry.get()
         if message:
             formatted_message = f"{self.username}: {message}"
-            self.add_text(formatted_message)
+            self.add_text(formatted_message)  # Display the message immediately
             self.send(formatted_message)
             self.entry.delete(0, tk.END)
 
