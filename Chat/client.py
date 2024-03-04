@@ -48,3 +48,5 @@ class Server()
         print("Tidying up")
         self.listener.close()
         self.echo("SUICIDE")
+        
+client_thread.start()
