@@ -14,7 +14,7 @@ wizard_list.append('swamp gas')                                                 
 print(wizard_list)                                                                        # Print the list
 wizard_list.pop(7)                                                                        # Delete item 6
 wizard_list.pop(6)                                                                        # Delete item 5
-wizard_list.pop(5)                                                                        # Delete item 4
+del wizard_list[5]                                                                        # Delete item 4
 print(wizard_list)                                                                        # Print the list
 
 
